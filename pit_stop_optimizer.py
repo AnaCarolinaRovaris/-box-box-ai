@@ -17,14 +17,12 @@ PIT_STOP_LOSS = 22.0
 fastf1.Cache.enable_cache("cache_f1")  
 
 def carregar_sessao(ano, gp, sessao):
-    """Baixa e carrega uma sessão real da F1."""
     s = fastf1.get_session(ano, gp, sessao)
     s.load()
     return s
 
 
 def extrair_voltas_piloto(sessao, piloto):
-    """Extrai as voltas de um piloto com features relevantes para o modelo de ML."""
     voltas = sessao.laps.pick_drivers(piloto).copy()
     voltas = voltas[voltas["LapTime"].notna()]
     voltas["LapTimeSeconds"] = voltas["LapTime"].dt.total_seconds()
@@ -41,12 +39,7 @@ ALVO = "LapTimeSeconds"
 
 
 def treinar_modelo_degradacao(voltas, test_size=0.25, random_state=42):
-    """
-    Treina um modelo de Machine Learning (Random Forest) para prever o tempo
-    de volta a partir de features como idade do pneu, composto e volta atual
-    (proxy de carga de combustível). Retorna o pipeline treinado e as métricas
-    de validação.
-    """
+
     colunas_usadas = FEATURES_NUMERICAS + FEATURES_CATEGORICAS + [ALVO]
     dados = voltas.dropna(subset=colunas_usadas).copy()
 
@@ -83,7 +76,6 @@ def treinar_modelo_degradacao(voltas, test_size=0.25, random_state=42):
 
 
 def prever_tempo_volta(modelo, composto, idade_pneu, numero_volta):
-    """Prevê o tempo de volta dado o composto, a idade do pneu e a volta atual."""
     entrada = pd.DataFrame([{
         "TyreLife": idade_pneu,
         "LapNumber": numero_volta,
@@ -94,10 +86,6 @@ def prever_tempo_volta(modelo, composto, idade_pneu, numero_volta):
 
 def simular_estrategia(modelo, composto_atual, composto_novo,
                         volta_pit, total_voltas, pit_loss=PIT_STOP_LOSS):
-    """
-    Simula o tempo total de corrida se o pit-stop acontecer em `volta_pit`,
-    trocando de `composto_atual` para `composto_novo`, usando o modelo de ML.
-    """
     tempo_total = 0.0
 
 
@@ -117,10 +105,6 @@ for numero_volta in range(1, volta_pit + 1):
 
 def encontrar_janela_otima(modelo, composto_atual, composto_novo, total_voltas,
                             volta_min=5, volta_max=None, pit_loss=PIT_STOP_LOSS):
-    """
-    Testa cada volta possível de pit-stop dentro da janela viável e retorna
-    a volta com menor tempo total projetado de corrida.
-    """
     if volta_max is None:
         volta_max = total_voltas - 3  
 
@@ -139,12 +123,10 @@ def encontrar_janela_otima(modelo, composto_atual, composto_novo, total_voltas,
 
 
 def extrair_pit_stops_reais(voltas):
-    """Identifica em quais voltas o piloto realmente parou nos boxes."""
     return voltas[voltas["PitInTime"].notna()]["LapNumber"].tolist()
 
 
 def plotar_degradacao(voltas, modelo, volta_media=None):
-    """Plota os tempos reais e a curva prevista pelo modelo de ML, por composto."""
     if volta_media is None:
         volta_media = int(voltas["LapNumber"].median())
 
@@ -176,11 +158,7 @@ def plotar_janela_otima(df_resultados, melhor, pits_reais):
     plt.tight_layout()
     plt.savefig("janela_pit_stop.png")
     plt.close()
-
-
-
-
-if __name__ == "__main__":
+    if __name__ == "__main__":
     sessao = carregar_sessao(ANO, GP, SESSAO)
     voltas = extrair_voltas_piloto(sessao, PILOTO)
 
