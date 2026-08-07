@@ -21,7 +21,6 @@ def carregar_sessao(ano, gp, sessao):
     s.load()
     return s
 
-
 def extrair_voltas_piloto(sessao, piloto):
     voltas = sessao.laps.pick_drivers(piloto).copy()
     voltas = voltas[voltas["LapTime"].notna()]
@@ -43,7 +42,6 @@ def adicionar_temperatura_pista(voltas, sessao):
 FEATURES_NUMERICAS = ["TyreLife", "LapNumber"]
 FEATURES_CATEGORICAS = ["Compound"]
 ALVO = "LapTimeSeconds"
-
 
 def treinar_modelo_degradacao(voltas, test_size=0.25, random_state=42):
 
@@ -81,7 +79,6 @@ def treinar_modelo_degradacao(voltas, test_size=0.25, random_state=42):
 
     return modelo, metricas
 
-
 def prever_tempo_volta(modelo, composto, idade_pneu, numero_volta):
     entrada = pd.DataFrame([{
         "TyreLife": idade_pneu,
@@ -95,20 +92,16 @@ def simular_estrategia(modelo, composto_atual, composto_novo,
                         volta_pit, total_voltas, pit_loss=PIT_STOP_LOSS):
     tempo_total = 0.0
 
-
 for numero_volta in range(1, volta_pit + 1):
         idade_pneu = numero_volta  
         tempo_total += prever_tempo_volta(modelo, composto_atual, idade_pneu, numero_volta)
 
     tempo_total += pit_loss  
-
     
     for numero_volta in range(volta_pit + 1, total_voltas + 1):
         idade_pneu_novo = numero_volta - volta_pit
         tempo_total += prever_tempo_volta(modelo, composto_novo, idade_pneu_novo, numero_volta)
-
     return tempo_total
-
 
 def encontrar_janela_otima(modelo, composto_atual, composto_novo, total_voltas,
                             volta_min=5, volta_max=None, pit_loss=PIT_STOP_LOSS):
@@ -127,11 +120,8 @@ def encontrar_janela_otima(modelo, composto_atual, composto_novo, total_voltas,
     melhor = df_resultados.loc[df_resultados["TempoTotalProjetado"].idxmin()]
     return melhor, df_resultados
 
-
-
 def extrair_pit_stops_reais(voltas):
     return voltas[voltas["PitInTime"].notna()]["LapNumber"].tolist()
-
 
 def plotar_degradacao(voltas, modelo, volta_media=None):
     if volta_media is None:
@@ -150,7 +140,6 @@ def plotar_degradacao(voltas, modelo, volta_media=None):
     plt.tight_layout()
     plt.savefig("degradacao_pneus.png")
     plt.close()
-
 
 def plotar_janela_otima(df_resultados, melhor, pits_reais):
     plt.figure(figsize=(9, 5))
