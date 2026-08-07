@@ -32,6 +32,13 @@ def extrair_voltas_piloto(sessao, piloto):
     colunas = [c for c in colunas if c in voltas.columns]
     return voltas[colunas].reset_index(drop=True)
 
+def adicionar_temperatura_pista(voltas, sessao):
+    clima = sessao.weather_data [["time", "tracktemp", "airtemp"]] . copy()
+    clima = clima.sort_values ("times")
+    voltas = voltas.sort_values
+    voltas = pd.merge_asof (voltas, clima, on = "time", direction "nearest")
+    return voltas.reset_index (drop=true)
+
 
 FEATURES_NUMERICAS = ["TyreLife", "LapNumber"]
 FEATURES_CATEGORICAS = ["Compound"]
