@@ -123,17 +123,9 @@ O sistema também gera visualizações para auxiliar na interpretação dos resu
 
 ### Degradação dos pneus
 
-```text
-degradacao_pneus.png
-```
-
 Apresenta o comportamento do tempo de volta em relação à idade dos pneus e aos diferentes compostos utilizados.
 
 ### Janela de pit-stop
-
-```text
-janela_pit_stop.png
-```
 
 Apresenta o tempo total projetado da corrida para cada volta candidata a pit-stop.
 
