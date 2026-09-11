@@ -123,13 +123,18 @@ O sistema também gera visualizações para auxiliar na interpretação dos resu
 
 ### Degradação dos pneus
 
-[degradacao_pneus.png](https://www.reddit.com/r/pics/comments/1fii33/formula_1_tire_after_a_race/?tl=pt-br)
+```text
+degradacao_pneus.png
+```
 
 Apresenta o comportamento do tempo de volta em relação à idade dos pneus e aos diferentes compostos utilizados.
 
 ### Janela de pit-stop
 
-[janela_pit_stop.png](https://www.lance.com.br/formula-1/mclaren-projeta-evolucao-na-formula-1-para-temporada-2026.html)
+```text
+janela_pit_stop.png
+```
+
 Apresenta o tempo total projetado da corrida para cada volta candidata a pit-stop.
 
 O ponto de menor tempo projetado representa a estratégia considerada mais eficiente pelo modelo para o cenário analisado.
