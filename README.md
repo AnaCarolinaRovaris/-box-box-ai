@@ -1,6 +1,6 @@
 # 🏎️ Otimização de Janelas de Pit-Stop via Degradação de Pneus
 
-Este repositório contém o projeto desenvolvido como **Trabalho de Conclusão de Curso (TCC)**, cujo objetivo é investigar a aplicação de **Machine Learning e análise de dados na otimização de estratégias de pit-stop em corridas de Fórmula 1**.
+Este repositório contém o projeto em desenvolvimento como **Trabalho de Conclusão de Curso (TCC)**, cujo objetivo é investigar a aplicação de **Machine Learning e análise de dados na otimização de estratégias de pit-stop em corridas de Fórmula 1**.
 
 O sistema utiliza dados reais de sessões de Fórmula 1 obtidos por meio da biblioteca **FastF1** e emprega um modelo de **Random Forest** para estimar o tempo de volta de um piloto a partir de características relacionadas aos pneus e ao andamento da corrida.
 
